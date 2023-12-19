@@ -3,13 +3,15 @@ from django.contrib.auth.hashers import make_password, check_password
 from .managers import UserManager
 from django.utils import timezone
 from django.utils.crypto import get_random_string
+
+from back.utils import async_email
 class User(models.Model):
     mail = models.EmailField(unique=True)
     name = models.CharField(max_length=30)
     surname = models.CharField(max_length=30)
     password = models.CharField(max_length=128)
     created_at = models.DateTimeField(default=timezone.now)
-    is_checked = models.BooleanField(default=False)
+    mail_is_checked = models.BooleanField(default=False)
 
     objects = UserManager()
 
@@ -29,8 +31,20 @@ class User(models.Model):
 
         return token.key
 
-    def send_mail(self):
-        pass
+    def check_mail(self, key):
+        token = self.get_auth_token()
+
+        if token.key == key:
+            self.mail_is_checked = True
+            self.save()
+
+            self.token.delete()
+    def send_check_mail(self):
+        token = self.get_auth_token()
+        subject = "Verificacion de mail."
+        context = {"token": token, "url": "https://www.youtube.com", "name": self.name}
+        recipient_list = [self.mail]
+        async_email(subject=subject, recipient_list=recipient_list, context=context)
 
 class Token(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)

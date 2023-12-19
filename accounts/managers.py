@@ -3,7 +3,7 @@ class UserManager(models.Manager):
     def sign_in(self, mail, name, surname, password):
         user = self.create(mail=mail, name=name, surname=surname, password=password)
         user.hash_password()
-        user.send_mail()
+        user.send_check_mail()
 
         return user
 
