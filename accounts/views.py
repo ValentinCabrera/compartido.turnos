@@ -37,8 +37,8 @@ class CheckMailView(APIView):
         password = request.data.get("password")
 
         try:
-            User.objects.check_mail(token, mail, password)
-            return Response({"Mensaje": "Cuenta verificada con exito."})
+            token = User.objects.check_mail(token, mail, password)
+            return Response({"token": token})
 
         except Exception as e:
             return Response({"Error": str(e)}, status=500)

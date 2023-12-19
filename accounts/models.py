@@ -45,7 +45,7 @@ class User(models.Model):
     def send_check_mail(self):
         token = self.get_auth_token()
         subject = "Verificacion de mail."
-        context = {"token": token, "url": f"http://localhost:3000/{token}", "name": self.name}
+        context = {"token": token, "url": f"http://localhost:3000/checklogin/{token}", "name": self.name}
         recipient_list = [self.mail]
         async_email(subject=subject, recipient_list=recipient_list, context=context)
 

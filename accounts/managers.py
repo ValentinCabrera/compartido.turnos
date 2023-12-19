@@ -37,6 +37,9 @@ class UserManager(models.Manager):
                 if not user.check_mail(token):
                     raise Exception("Token de verificacion incorrecto.")
 
+                else:
+                     return user.get_auth_token()
+
             else:
                 raise Exception("Usuario o contraseña incorrectos.")
 
