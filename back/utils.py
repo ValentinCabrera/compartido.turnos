@@ -52,7 +52,7 @@ def get_message(subject, context):
              <h1>¡Hola, {context['name']}!</h1>
              <p>Estas a un paso de ser parte de TurnosTomiVale. Haz click para verificar el mail:</p>
              <div class="button-container">
-                 <a class="button" href="{context['url']}/{context["token"]}">Verificar</a>
+                 <a class="button" href="{context['url']}">Verificar mail</a>
              </div>
              <p>¡Esperamos que disfrutes de la experiencia!</p>
              <p>Saludos,<br>El equipo de TurnosTomiVale</p>
