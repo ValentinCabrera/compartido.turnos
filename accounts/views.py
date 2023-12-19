@@ -13,7 +13,7 @@ class LogInView(APIView):
             return Response({"token": token_key})
 
         except Exception as e:
-            return Response({"Error": str(e)})
+            return Response({"Error": str(e)}, status=500)
 
 class SignInView(APIView):
     def post(self, request):
@@ -28,6 +28,19 @@ class SignInView(APIView):
             return Response({"Mensaje": "Usuario creado con exito."})
 
         except Exception as e:
-            return Response({"Error": str(e)})
+            return Response({"Error": str(e)}, status=500)
+
+class CheckMailView(APIView):
+    def post(self, request):
+        token = request.data.get("token")
+        mail = request.data.get("mail")
+        password = request.data.get("password")
+
+        try:
+            User.objects.check_mail(token, mail, password)
+            return Response({"Mensaje": "Cuenta verificada con exito."})
+
+        except Exception as e:
+            return Response({"Error": str(e)}, status=500)
 
 

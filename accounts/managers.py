@@ -14,7 +14,7 @@ class UserManager(models.Manager):
         except:
             raise Exception("Usuario o contraseña incorrectos.")
 
-        if user.is_checked:
+        if user.mail_is_checked:
             if user.check_password(password):
                 token = user.get_auth_token()
                 return token
@@ -23,5 +23,22 @@ class UserManager(models.Manager):
                 raise Exception("Usuario o contraseña incorrectos.")
 
         else:
-            user.send_mail()
             raise Exception("La cuenta no esta verificada.")
+
+    def check_mail(self, token, mail, password):
+        try:
+            user = self.get(mail=mail)
+
+        except:
+            raise Exception("Usuario o contraseña incorrectos.")
+
+        if not user.mail_is_checked:
+            if user.check_password(password):
+                if not user.check_mail(token):
+                    raise Exception("Token de verificacion incorrecto.")
+
+            else:
+                raise Exception("Usuario o contraseña incorrectos.")
+
+        else:
+            raise Exception("La cuenta ya ha sido verificada.")

@@ -34,11 +34,14 @@ class User(models.Model):
     def check_mail(self, key):
         token = self.get_auth_token()
 
-        if token.key == key:
+        if token == key:
             self.mail_is_checked = True
             self.save()
 
             self.token.delete()
+            return True
+
+        return False
     def send_check_mail(self):
         token = self.get_auth_token()
         subject = "Verificacion de mail."
