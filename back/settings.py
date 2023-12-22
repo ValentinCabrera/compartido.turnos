@@ -38,12 +38,11 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
 
+    "rest_framework",
+
     "accounts",
-    
-    "rest_framework"
 ]
 
-# "corsheaders.middleware.CorsMiddleware",
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",

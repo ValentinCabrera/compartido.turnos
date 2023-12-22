@@ -6,12 +6,19 @@ from django.utils.crypto import get_random_string
 
 from back.utils import async_email
 class User(models.Model):
+    GRUPOS = [
+        [1, 'cliente'],
+        [2, 'profesional'],
+        [3, 'administrador']
+    ]
+
     mail = models.EmailField(unique=True)
     name = models.CharField(max_length=30)
     surname = models.CharField(max_length=30)
     password = models.CharField(max_length=128)
     created_at = models.DateTimeField(default=timezone.now)
     mail_is_checked = models.BooleanField(default=False)
+    grupo = models.SmallIntegerField( choices=GRUPOS, default=1)
 
     objects = UserManager()
 

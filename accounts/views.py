@@ -8,9 +8,9 @@ class LogInView(APIView):
         password = request.data.get("password")
 
         try:
-            token_key = User.objects.log_in(mail, password)
+            token, grupo = User.objects.log_in(mail, password)
 
-            return Response({"token": token_key})
+            return Response({"token": token, "grupo": grupo})
 
         except Exception as e:
             return Response({"Error": str(e)}, status=500)

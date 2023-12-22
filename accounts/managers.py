@@ -17,7 +17,7 @@ class UserManager(models.Manager):
         if user.mail_is_checked:
             if user.check_password(password):
                 token = user.get_auth_token()
-                return token
+                return token, user.get_grupo_display()
 
             else:
                 raise Exception("Usuario o contraseña incorrectos.")
