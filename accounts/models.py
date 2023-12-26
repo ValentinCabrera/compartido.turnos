@@ -22,6 +22,14 @@ class User(models.Model):
 
     objects = UserManager()
 
+    def get_schedules(self):
+        if self.grupo == 2:
+            # filtrar si la fecha es mayor a la actual
+            shedules = self.schedules.filter(date__gte=timezone.now().date())
+            return shedules
+
+        raise Exception("No es un profesional.")
+
     def __str__(self):
         return self.name + " " + self.surname
 
