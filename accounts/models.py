@@ -22,6 +22,9 @@ class User(models.Model):
 
     objects = UserManager()
 
+    def __str__(self):
+        return self.name + " " + self.surname
+
     def hash_password(self):
         self.password = make_password(self.password)
         self.save()
